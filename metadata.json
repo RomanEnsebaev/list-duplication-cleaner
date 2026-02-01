@@ -1,0 +1,5 @@
+{
+  "name": "Word Deduplicator Pro",
+  "description": "A high-performance word list processor that removes duplicates from thousands of lines, provides detailed statistics on removed items, and supports file export.",
+  "requestFramePermissions": []
+}
