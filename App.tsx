@@ -3,7 +3,6 @@ import React, { useState, useCallback, useRef } from 'react';
 import { processWords, downloadAsFile } from './utils/wordProcessing';
 import { ProcessingResult } from './types';
 import { Stats } from './components/Stats';
-import { GoogleGenAI } from "@google/genai";
 
 const App: React.FC = () => {
   const [inputText, setInputText] = useState<string>('');
@@ -47,35 +46,12 @@ const App: React.FC = () => {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const handleSuggestNormalization = async () => {
-    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-    const sample = inputText.split('\n').slice(0, 10).join(', ');
-    
-    try {
-      const response = await ai.models.generateContent({
-        model: 'gemini-3-flash-preview',
-        contents: `I have a list of words starting with: ${sample}. Suggest the best way to clean this list (e.g., lowercase all, remove punctuation, group by categories). Keep it very brief.`,
-      });
-      alert(`AI Suggestion:\n${response.text}`);
-    } catch (err) {
-      console.error("Gemini failed:", err);
-    }
-  };
-
   return (
     <div className="min-h-screen pb-12 px-4 md:px-8">
-      <header className="max-w-6xl mx-auto pt-10 pb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <header className="max-w-6xl mx-auto pt-10 pb-8 flex flex-col md:items-start justify-between gap-4">
         <div>
           <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">Word Deduplicator Pro</h1>
           <p className="text-slate-500 mt-1">Smart processing for massive word lists.</p>
-        </div>
-        <div className="flex items-center gap-3">
-           <button 
-            onClick={handleSuggestNormalization}
-            className="text-xs font-semibold px-3 py-2 bg-indigo-50 text-indigo-600 rounded-lg border border-indigo-100 hover:bg-indigo-100 transition-colors shadow-sm"
-          >
-            AI Analysis
-          </button>
         </div>
       </header>
 
@@ -109,7 +85,7 @@ const App: React.FC = () => {
 apple
 banana
 apple banana"
-                  className="w-full h-80 lg:h-full min-h-[300px] p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-mono text-sm resize-none"
+                  className="w-full h-80 lg:h-full min-h-[300px] p-4 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-mono text-sm text-slate-900 placeholder:text-slate-400 resize-none"
                 />
               </div>
 
